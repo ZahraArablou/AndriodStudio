@@ -31,6 +31,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     boolean flag=true;
     ArrayList<Math> listofMathQuiz;
 
+    Button buttonN[];
+    int buttonId[];
+    String answer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,41 +52,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textViewOperation = findViewById(R.id.tvOperation);
         textViewValidation=findViewById(R.id.tvValidation);
 
-        btn1 = findViewById(R.id.btn1);
-        btn1.setOnClickListener(this);
-
-        btn2 = findViewById(R.id.btn2);
-        btn2.setOnClickListener(this);
-
-        btn3 = findViewById(R.id.btn3);
-        btn3.setOnClickListener(this);
-
-        btn4 = findViewById(R.id.btn4);
-        btn4.setOnClickListener(this);
-
-        btn5 = findViewById(R.id.btn5);
-        btn5.setOnClickListener(this);
-
-        btn6 = findViewById(R.id.btn6);
-        btn6.setOnClickListener(this);
-
-        btn7 = findViewById(R.id.btn7);
-        btn7.setOnClickListener(this);
-
-        btn8 = findViewById(R.id.btn8);
-        btn8.setOnClickListener(this);
-
-        btn9 = findViewById(R.id.btn9);
-        btn9.setOnClickListener(this);
-
-        btnDot = findViewById(R.id.btnDot);
-        btnDot.setOnClickListener(this);
-
-        btn0 = findViewById(R.id.btn0);
-        btn0.setOnClickListener(this);
-
+        buttonId=new int[]{R.id.btn0,R.id.btn1,R.id.btn2,R.id.btn3,R.id.btn4,R.id.btn5,R.id.btn6,R.id.btn7,R.id.btn8,R.id.btn9};
+        buttonN=new Button[10];
+        for(int i=0;i<10;i++) {
+            buttonN[i] = findViewById(buttonId[i]);
+            buttonN[i].setOnClickListener(this);
+        }
         btnDash = findViewById(R.id.btnDash);
         btnDash.setOnClickListener(this);
+
+        btnDot=findViewById(R.id.btnDot);
+        btnDot.setOnClickListener(this);
 
         btnGenerate = findViewById(R.id.btnGenerate);
         btnGenerate.setOnClickListener(this);
@@ -106,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        String answer;
+
         switch (v.getId()) {
               case R.id.btnDash:
                 String str=editTextAnswer.getText().toString();
@@ -121,47 +101,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     editTextAnswer.setText(answer);
                     flag=true;
                 }
-                break;
-
-            case R.id.btn1:
-                answer = editTextAnswer.getText() + "1";
-                editTextAnswer.setText(answer);
-                break;
-            case R.id.btn2:
-                answer = editTextAnswer.getText() + "2";
-                editTextAnswer.setText(answer);
-                break;
-            case R.id.btn3:
-                answer = editTextAnswer.getText() + "3";
-                editTextAnswer.setText(answer);
-                break;
-            case R.id.btn4:
-                answer = editTextAnswer.getText() + "4";
-                editTextAnswer.setText(answer);
-                break;
-            case R.id.btn5:
-                answer = editTextAnswer.getText() + "5";
-                editTextAnswer.setText(answer);
-                break;
-            case R.id.btn6:
-                answer = editTextAnswer.getText() + "6";
-                editTextAnswer.setText(answer);
-                break;
-            case R.id.btn7:
-                answer = editTextAnswer.getText() + "7";
-                editTextAnswer.setText(answer);
-                break;
-            case R.id.btn8:
-                answer = editTextAnswer.getText() + "8";
-                editTextAnswer.setText(answer);
-                break;
-            case R.id.btn9:
-                answer = editTextAnswer.getText() + "9";
-                editTextAnswer.setText(answer);
-                break;
-            case R.id.btn0:
-                answer = editTextAnswer.getText() + "0";
-                editTextAnswer.setText(answer);
                 break;
             case R.id.btnDot:
                 if (editTextAnswer.getText().toString().contains(".")) {
@@ -197,7 +136,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnFinish:
                 showAlertDialog1(btnFinish);
                 break;
+            default:
+                for (int i=0;i<10;i++)
+                {
+                    if(v.getId()==buttonId[i])
+                        goNumber(i);
+                }
         }
+    }
+
+    private void goNumber(int i){
+        answer = editTextAnswer.getText() + String.valueOf(i);
+        editTextAnswer.setText(answer);
     }
 
     private void goGenerate() {
